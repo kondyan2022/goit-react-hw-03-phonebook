@@ -3,6 +3,7 @@ import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
 
+const LOCAL_STORAGE_KEY = 'contacts';
 const INITIAL_STATE = {
   contacts: [
     // { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
@@ -18,13 +19,18 @@ export class App extends Component {
 
   componentDidMount() {
     if (localStorage.getItem('contacts')) {
-      this.setState({ contacts: JSON.parse(localStorage.getItem('contacts')) });
+      this.setState({
+        contacts: JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)),
+      });
     }
   }
 
   componentDidUpdate(_, prevState) {
     if (prevState.contacts.length !== this.state.contacts.length) {
-      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+      localStorage.setItem(
+        LOCAL_STORAGE_KEY,
+        JSON.stringify(this.state.contacts)
+      );
     }
   }
 
